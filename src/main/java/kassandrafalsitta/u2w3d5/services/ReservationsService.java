@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,13 +36,6 @@ public class ReservationsService {
     }
 
     public Reservation saveReservation(ReservationDTO body) {
-        LocalDate dateReservation = null;
-        try {
-            dateReservation = LocalDate.parse(body.dateReservation());
-        } catch (DateTimeParseException e) {
-            throw new BadRequestException("Il formato della data non è valido: " + body.dateReservation()+" inserire nel seguente formato: AAAA-MM-GG");
-        }
-
         UUID userID = null;
         try {
             userID = UUID.fromString(body.userID());
@@ -56,14 +50,16 @@ public class ReservationsService {
         }
         Event event = eventsService.findById(eventID);
         User user = usersService.findById(userID);
+        Optional<Reservation> existingReservation = this.reservationsRepository.findByUserIdAndEvent_DateEvent(userID, event.getDateEvent());
+        System.out.println(existingReservation);
         this.reservationsRepository.findByUserIdAndEvent_DateEvent(userID,event.getDateEvent()).ifPresent(
                 reservation -> {
-                    throw new BadRequestException("La data " + body.dateReservation() + " è già in uso per l'utente" + body.userID());
+                    throw new BadRequestException("La data " +event.getDateEvent() + " è già in uso per l'utente " + user.getId());
                 }
         );
 
 
-        Reservation reservation = new Reservation(dateReservation, event, user);
+        Reservation reservation = new Reservation( event, user);
         return this.reservationsRepository.save(reservation);
     }
 
@@ -85,13 +81,7 @@ public class ReservationsService {
             throw new BadRequestException("L'UUID dell' evento non è corretto");
         }
         Reservation found = findById(reservationId);
-        LocalDate date = null;
-        try {
-            date = LocalDate.parse(updatedReservation.dateReservation());
-        } catch (DateTimeParseException e) {
-            throw new BadRequestException("Il formato della data non è valido: " + updatedReservation.dateReservation()+" inserire nel seguente formato: AAAA/MM/GG");
-        }
-        found.setDateReservation(date);
+
         Event event = eventsService.findById(eventID);
         User user = usersService.findById(userID);
         found.setEvent(event);

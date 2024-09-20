@@ -17,6 +17,7 @@ public class Reservation {
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private UUID id;
+    @Setter(AccessLevel.NONE)
     private LocalDate dateReservation;
 
     @ManyToOne
@@ -26,8 +27,8 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
     //costruttore
-    public Reservation( LocalDate dateReservation,  Event event, User user) {
-        this.dateReservation = dateReservation;
+    public Reservation(Event event, User user) {
+        this.dateReservation = LocalDate.now();
         this.event = event;
         this.user = user;
     }
