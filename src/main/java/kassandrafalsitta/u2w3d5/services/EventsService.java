@@ -93,7 +93,7 @@ public class EventsService {
     }
 
     public List<Event> findByUser(User user) {
-        return this.eventsRepository.findByUser(user);
+        return this.eventsRepository.findByUserPost(user);
     }
 }
 

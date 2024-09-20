@@ -25,6 +25,10 @@ public class Event {
     private int numberOfPlaces;
     @Enumerated(EnumType.STRING)
     private StateEvent stateEvent;
+
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private User userPost;
 
     //costruttore

@@ -49,7 +49,6 @@ public class ReservationsService {
         Event event = eventsService.findById(eventID);
         User user = usersService.findById(userID);
         Optional<Reservation> existingReservation = this.reservationsRepository.findByUserIdAndEvent_DateEvent(userID, event.getDateEvent());
-        System.out.println(existingReservation);
         this.reservationsRepository.findByUserIdAndEvent_DateEvent(userID,event.getDateEvent()).ifPresent(
                 reservation -> {
                     throw new BadRequestException("La data " +event.getDateEvent() + " è già in uso per l'utente " + user.getId());
