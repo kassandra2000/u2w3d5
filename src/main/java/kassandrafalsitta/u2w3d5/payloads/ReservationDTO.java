@@ -9,8 +9,8 @@ public record ReservationDTO(
         String dateReservation,
         @NotEmpty(message = "L'UUID dell' evento è obbligatorio")
         @Size(min = 36, max = 36, message = "L'UUID dell' evento  deve avere 36 caratteri")
-        String travelID,
+        String eventID,
         @NotEmpty(message = "L'UUID dell' utente è obbligatorio")
         @Size(min = 36, max = 36, message = "L'UUID dell' utente  deve avere 36 caratteri")
-        String employeeID) {
+        String userID) {
 }

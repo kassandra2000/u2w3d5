@@ -4,9 +4,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public record EventDTO(
-        @NotEmpty(message = "La destinazione è obbligatoria")
-        @Size(min = 3, max = 30, message = "La destinazione deve essere compresa tra 3 e 30 caratteri")
-        String destination,
         @NotEmpty(message = "Il titolo è obbligatorio")
         @Size(min = 3, max = 30, message = "Il titolo deve essere compreso tra 3 e 30 caratteri")
         String title,
