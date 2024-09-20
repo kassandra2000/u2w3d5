@@ -33,6 +33,7 @@ public class User implements UserDetails {
     private Role role;
 
 
+
     //costruttore
 
     public User(String username, String name, String surname, String email, String password) {
@@ -49,4 +50,6 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
+
+
 }

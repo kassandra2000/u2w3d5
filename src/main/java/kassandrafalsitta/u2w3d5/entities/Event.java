@@ -27,14 +27,16 @@ public class Event {
     private String place;
     private int numberOfPlaces;
     private StateEvent stateEvent;
+    private User userPost;
 
     //costruttore
-    public Event(String title, String description, LocalDate dateEvent, String place, int numberOfPlaces) {
+    public Event(String title, String description, LocalDate dateEvent, String place, int numberOfPlaces, User userPost) {
         this.title = title;
         this.description = description;
         this.dateEvent = dateEvent;
         this.place = place;
         this.numberOfPlaces = numberOfPlaces;
         this.stateEvent = StateEvent.AVAILABLE;
+        this.userPost = userPost;
     }
 }

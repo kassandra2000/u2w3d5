@@ -57,7 +57,7 @@ public class ReservationsService {
         );
 
         List<Reservation> reservationList = this.reservationsRepository.findByEvent(event);
-        if (reservationList.size() <= event.getNumberOfPlaces()) {
+        if (reservationList.size() < event.getNumberOfPlaces()) {
             Reservation reservation = new Reservation(event, user);
             return this.reservationsRepository.save(reservation);
         } else {

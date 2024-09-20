@@ -1,18 +1,21 @@
 package kassandrafalsitta.u2w3d5.services;
 
 import kassandrafalsitta.u2w3d5.entities.Event;
+import kassandrafalsitta.u2w3d5.entities.User;
 import kassandrafalsitta.u2w3d5.enums.StateEvent;
 import kassandrafalsitta.u2w3d5.exceptions.BadRequestException;
 import kassandrafalsitta.u2w3d5.exceptions.NotFoundException;
 import kassandrafalsitta.u2w3d5.payloads.EventDTO;
-import kassandrafalsitta.u2w3d5.payloads.EventRespUserDT0;
 import kassandrafalsitta.u2w3d5.payloads.StateEventDTO;
 import kassandrafalsitta.u2w3d5.repositories.EventsRepository;
+import kassandrafalsitta.u2w3d5.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +27,8 @@ import java.util.UUID;
 public class EventsService {
     @Autowired
     private EventsRepository eventsRepository;
+    @Autowired
+    private UsersRepository usersRepository;
 
     public Page<Event> findAll(int page, int size, String sortBy) {
         if (page > 100) page = 100;
@@ -42,8 +47,9 @@ public class EventsService {
         if (dateEventAndPlace.isPresent()) {
             throw new BadRequestException("La data " + body.dateEvent() + " e il luogo " + body.place() + " sono già in uso!");
         }
-
-        Event employee = new Event(body.title(), body.description(), dateEvent, body.place(), Integer.parseInt(body.numberOfPlaces()));
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        Event employee = new Event(body.title(), body.description(), dateEvent, body.place(), Integer.parseInt(body.numberOfPlaces()),user);
 
         return this.eventsRepository.save(employee);
     }
