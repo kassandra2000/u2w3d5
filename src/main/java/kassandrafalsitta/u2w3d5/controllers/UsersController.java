@@ -49,7 +49,7 @@ public class UsersController {
     public User findUserByIdAndUpdate(@PathVariable UUID userId, @RequestBody @Validated UserDTO body) {
         return usersService.findByIdAndUpdate(userId, body);
     }
-    @PatchMapping("/{userId}")
+    @PatchMapping("/{userId}/role")
     @PreAuthorize("hasAuthority('ADMIN')")
     public User findByIdAndUpdateRole(@PathVariable UUID userId, @RequestBody @Validated UserRoleDTO body) {
         return usersService.findByIdAndUpdateRole(userId, body);
