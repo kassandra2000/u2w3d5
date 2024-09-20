@@ -1,9 +1,11 @@
 package kassandrafalsitta.u2w3d5.services;
 
 import kassandrafalsitta.u2w3d5.entities.User;
+import kassandrafalsitta.u2w3d5.enums.Role;
 import kassandrafalsitta.u2w3d5.exceptions.BadRequestException;
 import kassandrafalsitta.u2w3d5.exceptions.NotFoundException;
 import kassandrafalsitta.u2w3d5.payloads.UserDTO;
+import kassandrafalsitta.u2w3d5.payloads.UserRoleDTO;
 import kassandrafalsitta.u2w3d5.repositories.UsersRepository;
 import kassandrafalsitta.u2w3d5.tools.MailgunSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -59,6 +60,18 @@ public class UsersService {
         found.setSurname(updatedUser.surname());
         found.setEmail(updatedUser.email());
         found.setPassword(updatedUser.password());
+        return this.usersRepository.save(found);
+    }
+
+    public User findByIdAndUpdateRole(UUID employeeId, UserRoleDTO updatedUserRole) {
+        User found = findById(employeeId);
+        Role role = null;
+        try {
+            role = Role.valueOf(updatedUserRole.role());
+        } catch (Exception e) {
+            throw new BadRequestException("Il formato della data non è valido: " + updatedUserRole.role() + " inserire nel seguente formato: AAAA/MM/GG");
+        }
+        found.setRole(role);
         return this.usersRepository.save(found);
     }
 

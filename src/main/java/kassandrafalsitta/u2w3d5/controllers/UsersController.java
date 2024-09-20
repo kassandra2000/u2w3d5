@@ -4,10 +4,7 @@ import kassandrafalsitta.u2w3d5.entities.Event;
 import kassandrafalsitta.u2w3d5.entities.Reservation;
 import kassandrafalsitta.u2w3d5.entities.User;
 import kassandrafalsitta.u2w3d5.exceptions.NotFoundException;
-import kassandrafalsitta.u2w3d5.payloads.EventDTO;
-import kassandrafalsitta.u2w3d5.payloads.ReservationDTO;
-import kassandrafalsitta.u2w3d5.payloads.StateEventDTO;
-import kassandrafalsitta.u2w3d5.payloads.UserDTO;
+import kassandrafalsitta.u2w3d5.payloads.*;
 import kassandrafalsitta.u2w3d5.services.EventsService;
 import kassandrafalsitta.u2w3d5.services.ReservationsService;
 import kassandrafalsitta.u2w3d5.services.UsersService;
@@ -51,6 +48,10 @@ public class UsersController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public User findUserByIdAndUpdate(@PathVariable UUID userId, @RequestBody @Validated UserDTO body) {
         return usersService.findByIdAndUpdate(userId, body);
+    }
+    @PatchMapping("/{userId}")
+    public User findByIdAndUpdateRole(@PathVariable UUID userId, @RequestBody @Validated UserRoleDTO body) {
+        return usersService.findByIdAndUpdateRole(userId, body);
     }
 
     @DeleteMapping("/{userId}")
