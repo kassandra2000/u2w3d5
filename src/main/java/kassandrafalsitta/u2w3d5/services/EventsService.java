@@ -5,6 +5,7 @@ import kassandrafalsitta.u2w3d5.enums.StateEvent;
 import kassandrafalsitta.u2w3d5.exceptions.BadRequestException;
 import kassandrafalsitta.u2w3d5.exceptions.NotFoundException;
 import kassandrafalsitta.u2w3d5.payloads.EventDTO;
+import kassandrafalsitta.u2w3d5.payloads.EventRespUserDT0;
 import kassandrafalsitta.u2w3d5.payloads.StateEventDTO;
 import kassandrafalsitta.u2w3d5.repositories.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class EventsService {
         }
 
         Event employee = new Event(body.title(), body.description(), dateEvent, body.place(), Integer.parseInt(body.numberOfPlaces()));
+
         return this.eventsRepository.save(employee);
     }
 

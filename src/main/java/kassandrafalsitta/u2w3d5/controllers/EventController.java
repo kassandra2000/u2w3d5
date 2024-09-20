@@ -63,7 +63,7 @@ public class EventController {
     public void findEventByIdAndDelete(@PathVariable UUID eventId) {
         eventsService.findByIdAndDelete(eventId);
     }
-    
+
     @PatchMapping("/{eventId}")
     @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER','ADMIN')")
     public Event findEventByIdAndUpdateState(@PathVariable UUID travelId, @RequestBody @Validated StateEventDTO body) {

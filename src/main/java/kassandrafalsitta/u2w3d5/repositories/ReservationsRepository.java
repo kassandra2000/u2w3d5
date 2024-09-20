@@ -1,5 +1,6 @@
 package kassandrafalsitta.u2w3d5.repositories;
 
+import kassandrafalsitta.u2w3d5.entities.Event;
 import kassandrafalsitta.u2w3d5.entities.Reservation;
 import kassandrafalsitta.u2w3d5.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,7 @@ public interface ReservationsRepository extends JpaRepository<Reservation, UUID>
     Optional<Reservation> findByUserIdAndEvent_DateEvent(UUID userId, LocalDate dateEvent);
 
     List<Reservation> findByUser(User user);
+
+    List<Reservation> findByEvent(Event event);
+
 }

@@ -14,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,9 +56,13 @@ public class ReservationsService {
                 }
         );
 
-
-        Reservation reservation = new Reservation( event, user);
-        return this.reservationsRepository.save(reservation);
+        List<Reservation> reservationList = this.reservationsRepository.findByEvent(event);
+        if (reservationList.size() <= event.getNumberOfPlaces()) {
+            Reservation reservation = new Reservation(event, user);
+            return this.reservationsRepository.save(reservation);
+        } else {
+            throw new BadRequestException("L'evento " + eventID + " è al completo!");
+        }
     }
 
     public Reservation findById(UUID reservationId) {
