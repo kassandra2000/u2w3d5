@@ -1,6 +1,7 @@
 package kassandrafalsitta.u2w3d5.services;
 
 import kassandrafalsitta.u2w3d5.entities.Event;
+import kassandrafalsitta.u2w3d5.entities.Reservation;
 import kassandrafalsitta.u2w3d5.entities.User;
 import kassandrafalsitta.u2w3d5.enums.StateEvent;
 import kassandrafalsitta.u2w3d5.exceptions.BadRequestException;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -89,4 +91,10 @@ public class EventsService {
         found.setStateEvent(stateEvent);
         return this.eventsRepository.save(found);
     }
+
+    public List<Event> findByUser(User user) {
+        return this.eventsRepository.findByUser(user);
+    }
 }
+
+

@@ -46,28 +46,28 @@ public class EventController {
     }
 
     @GetMapping("/{eventId}")
-    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER','ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Event getEventById(@PathVariable UUID eventId) {
         return eventsService.findById(eventId);
     }
 
     @PutMapping("/{eventId}")
-    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER','ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Event findEventByIdAndUpdate(@PathVariable UUID eventId, @RequestBody @Validated EventDTO body) {
         return eventsService.findByIdAndUpdate(eventId, body);
     }
 
     @DeleteMapping("/{eventId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER','ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void findEventByIdAndDelete(@PathVariable UUID eventId) {
         eventsService.findByIdAndDelete(eventId);
     }
 
     @PatchMapping("/{eventId}")
-    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER','ADMIN')")
-    public Event findEventByIdAndUpdateState(@PathVariable UUID travelId, @RequestBody @Validated StateEventDTO body) {
-        return eventsService.findByIdAndUpdateState(travelId, body);
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Event findEventByIdAndUpdateState(@PathVariable UUID eventId, @RequestBody @Validated StateEventDTO body) {
+        return eventsService.findByIdAndUpdateState(eventId, body);
     }
 
 

@@ -1,9 +1,6 @@
 package kassandrafalsitta.u2w3d5.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import kassandrafalsitta.u2w3d5.enums.StateEvent;
 import lombok.*;
 
@@ -26,6 +23,7 @@ public class Event {
     private LocalDate dateEvent;
     private String place;
     private int numberOfPlaces;
+    @Enumerated(EnumType.STRING)
     private StateEvent stateEvent;
     private User userPost;
 
