@@ -1,9 +1,11 @@
 package kassandrafalsitta.u2w3d5.services;
 
 import kassandrafalsitta.u2w3d5.entities.Event;
+import kassandrafalsitta.u2w3d5.enums.StateEvent;
 import kassandrafalsitta.u2w3d5.exceptions.BadRequestException;
 import kassandrafalsitta.u2w3d5.exceptions.NotFoundException;
 import kassandrafalsitta.u2w3d5.payloads.EventDTO;
+import kassandrafalsitta.u2w3d5.payloads.StateEventDTO;
 import kassandrafalsitta.u2w3d5.repositories.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,5 +70,15 @@ public class EventsService {
         this.eventsRepository.delete(this.findById(travelId));
     }
 
-
+    public Event findByIdAndUpdateState(UUID eventId, StateEventDTO updatedStateEvent) {
+        Event found = findById(eventId);
+        StateEvent stateEvent = null;
+        try {
+            stateEvent = StateEvent.valueOf(updatedStateEvent.stateEvent().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Stato dell'evento non valido: " + updatedStateEvent.stateEvent());
+        }
+        found.setStateEvent(stateEvent);
+        return this.eventsRepository.save(found);
+    }
 }

@@ -4,6 +4,7 @@ import kassandrafalsitta.u2w3d5.entities.Event;
 import kassandrafalsitta.u2w3d5.exceptions.BadRequestException;
 import kassandrafalsitta.u2w3d5.payloads.EventDTO;
 import kassandrafalsitta.u2w3d5.payloads.EventRespDTO;
+import kassandrafalsitta.u2w3d5.payloads.StateEventDTO;
 import kassandrafalsitta.u2w3d5.services.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -62,7 +63,12 @@ public class EventController {
     public void findEventByIdAndDelete(@PathVariable UUID eventId) {
         eventsService.findByIdAndDelete(eventId);
     }
-
+    
+    @PatchMapping("/{eventId}")
+    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER','ADMIN')")
+    public Event findEventByIdAndUpdateState(@PathVariable UUID travelId, @RequestBody @Validated StateEventDTO body) {
+        return eventsService.findByIdAndUpdateState(travelId, body);
+    }
 
 
 }

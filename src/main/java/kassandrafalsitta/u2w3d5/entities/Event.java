@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import kassandrafalsitta.u2w3d5.enums.StateEvent;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,6 +26,8 @@ public class Event {
     private LocalDate dateEvent;
     private String place;
     private int numberOfPlaces;
+    private StateEvent stateEvent;
+
     //costruttore
     public Event(String title, String description, LocalDate dateEvent, String place, int numberOfPlaces) {
         this.title = title;
@@ -32,5 +35,6 @@ public class Event {
         this.dateEvent = dateEvent;
         this.place = place;
         this.numberOfPlaces = numberOfPlaces;
+        this.stateEvent = StateEvent.AVAILABLE;
     }
 }
